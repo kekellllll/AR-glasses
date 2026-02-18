@@ -32,3 +32,24 @@ google-services.json
 
 # Android Profiling
 *.hprof
+*.tflite
+*.tflite.metadata
+*.tflite.labels
+*.tflite.txt
+*.tflite.bin
+*.tflite.proto
+*.tflite.summary
+*.tflite.trace
+*.tflite.trace.json
+*.tflite.trace.txt
+*.tflite.trace.bin
+*.tflite.trace.proto
+*.tflite.trace.summary
+*.tflite.trace.trace
+*.tflite.trace.trace.json
+*.tflite.trace.trace.txt
+*.tflite.trace.trace.bin
+*.tflite.trace.trace.proto
+*.tflite.trace.trace.summary
+*.tflite.trace.trace.trace
+*.tflite.trace.trace.trace.json 
