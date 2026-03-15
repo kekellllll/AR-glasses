@@ -1,0 +1,38 @@
+[
+  {
+    "zoneId": 1,
+    "description": "Dairy & Refrigerated - Top Shelf",
+    "shelfLevel": "top",
+    "expectedSkus": ["HZ-MILK-001", "CHO-YOG-007", "SILK-AM-004"]
+  },
+  {
+    "zoneId": 2,
+    "description": "Dairy & Refrigerated - Bottom Shelf",
+    "shelfLevel": "bottom",
+    "expectedSkus": ["TROP-OJ-006"]
+  },
+  {
+    "zoneId": 3,
+    "description": "Spreads & Condiments",
+    "shelfLevel": "middle",
+    "expectedSkus": ["JIF-PB-002", "SAB-HUM-005"]
+  },
+  {
+    "zoneId": 4,
+    "description": "Bakery & Bread",
+    "shelfLevel": "top",
+    "expectedSkus": ["CB-BREAD-003"]
+  },
+  {
+    "zoneId": 5,
+    "description": "Snacks - Upper",
+    "shelfLevel": "top",
+    "expectedSkus": ["TRI-CRK-008", "PL-NUTS-010"]
+  },
+  {
+    "zoneId": 6,
+    "description": "Snacks - Lower",
+    "shelfLevel": "bottom",
+    "expectedSkus": ["CA-COOK-009"]
+  }
+]

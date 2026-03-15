@@ -1,0 +1,102 @@
+[
+  {
+    "name": "Organic Whole Milk",
+    "brand": "Horizon",
+    "sku": "HZ-MILK-001",
+    "category": "dairy",
+    "ingredients": "Organic Grade A Milk, Vitamin D3",
+    "allergens": ["milk"],
+    "nutritionFacts": "Calories 150, Total Fat 8g, Saturated Fat 5g, Cholesterol 35mg, Sodium 125mg, Total Carbohydrate 12g, Sugars 12g, Protein 8g, Calcium 30%, Vitamin D 25%",
+    "price": "$5.99"
+  },
+  {
+    "name": "Crunchy Peanut Butter",
+    "brand": "Jif",
+    "sku": "JIF-PB-002",
+    "category": "spreads",
+    "ingredients": "Roasted Peanuts, Sugar, Molasses, Fully Hydrogenated Vegetable Oils, Mono and Diglycerides, Salt",
+    "allergens": ["peanut"],
+    "nutritionFacts": "Calories 190, Total Fat 16g, Saturated Fat 3g, Sodium 140mg, Total Carbohydrate 8g, Sugars 3g, Protein 7g",
+    "price": "$4.49"
+  },
+  {
+    "name": "Gluten Free Bread",
+    "brand": "Canyon Bakehouse",
+    "sku": "CB-BREAD-003",
+    "category": "bakery",
+    "ingredients": "Water, Brown Rice Flour, Tapioca Starch, Potato Starch, Egg Whites, Cane Sugar, Non-GMO Expeller Pressed Canola Oil, Flaxseed Meal, Xanthan Gum, Yeast, Salt",
+    "allergens": ["egg"],
+    "nutritionFacts": "Calories 110, Total Fat 2.5g, Sodium 170mg, Total Carbohydrate 21g, Dietary Fiber 3g, Sugars 3g, Protein 2g",
+    "price": "$6.29"
+  },
+  {
+    "name": "Almond Milk Unsweetened",
+    "brand": "Silk",
+    "sku": "SILK-AM-004",
+    "category": "dairy-alternative",
+    "ingredients": "Almondmilk (Filtered Water, Almonds), Calcium Carbonate, Sea Salt, Potassium Citrate, Sunflower Lecithin, Gellan Gum, Vitamin A Palmitate, Vitamin D2, DL-Alpha-Tocopherol Acetate",
+    "allergens": ["tree nut", "almond"],
+    "nutritionFacts": "Calories 30, Total Fat 2.5g, Sodium 170mg, Total Carbohydrate 1g, Sugars 0g, Protein 1g, Calcium 45%, Vitamin D 25%, Vitamin E 50%",
+    "price": "$3.99"
+  },
+  {
+    "name": "Classic Hummus",
+    "brand": "Sabra",
+    "sku": "SAB-HUM-005",
+    "category": "deli",
+    "ingredients": "Cooked Chickpeas, Water, Tahini (Ground Sesame), Soybean Oil, Garlic, Salt, Citric Acid, Potassium Sorbate",
+    "allergens": ["sesame"],
+    "nutritionFacts": "Calories 70, Total Fat 5g, Sodium 130mg, Total Carbohydrate 4g, Dietary Fiber 1g, Sugars 0g, Protein 2g",
+    "price": "$4.99"
+  },
+  {
+    "name": "Orange Juice No Pulp",
+    "brand": "Tropicana",
+    "sku": "TROP-OJ-006",
+    "category": "beverages",
+    "ingredients": "100% Pure Pasteurized Orange Juice",
+    "allergens": [],
+    "nutritionFacts": "Calories 110, Total Fat 0g, Sodium 0mg, Total Carbohydrate 26g, Sugars 22g, Protein 2g, Vitamin C 120%, Potassium 10%",
+    "price": "$4.29"
+  },
+  {
+    "name": "Greek Yogurt Plain",
+    "brand": "Chobani",
+    "sku": "CHO-YOG-007",
+    "category": "dairy",
+    "ingredients": "Cultured Nonfat Milk, Live Active Cultures: S. Thermophilus, L. Bulgaricus, L. Acidophilus, Bifidus, L. Casei",
+    "allergens": ["milk"],
+    "nutritionFacts": "Calories 90, Total Fat 0g, Cholesterol 10mg, Sodium 70mg, Total Carbohydrate 6g, Sugars 4g, Protein 16g, Calcium 15%",
+    "price": "$5.49"
+  },
+  {
+    "name": "Wheat Crackers",
+    "brand": "Triscuit",
+    "sku": "TRI-CRK-008",
+    "category": "snacks",
+    "ingredients": "Whole Grain Wheat, Soybean Oil, Salt",
+    "allergens": ["wheat", "soy"],
+    "nutritionFacts": "Calories 120, Total Fat 4g, Sodium 160mg, Total Carbohydrate 20g, Dietary Fiber 3g, Sugars 0g, Protein 3g",
+    "price": "$3.79"
+  },
+  {
+    "name": "Chocolate Chip Cookies",
+    "brand": "Chips Ahoy",
+    "sku": "CA-COOK-009",
+    "category": "snacks",
+    "ingredients": "Enriched Flour (Wheat Flour, Niacin, Iron, Thiamine, Riboflavin, Folic Acid), Sugar, Soybean Oil, Chocolate Chips (Sugar, Chocolate, Cocoa Butter, Milk, Soy Lecithin), High Fructose Corn Syrup, Eggs, Salt",
+    "allergens": ["wheat", "milk", "soy", "egg"],
+    "nutritionFacts": "Calories 160, Total Fat 8g, Saturated Fat 2.5g, Sodium 110mg, Total Carbohydrate 22g, Sugars 11g, Protein 1g",
+    "price": "$4.19"
+  },
+  {
+    "name": "Mixed Nuts",
+    "brand": "Planters",
+    "sku": "PL-NUTS-010",
+    "category": "snacks",
+    "ingredients": "Peanuts, Almonds, Cashews, Pecans, Brazil Nuts, Sea Salt, Peanut Oil",
+    "allergens": ["peanut", "tree nut", "almond", "cashew", "pecan"],
+    "nutritionFacts": "Calories 170, Total Fat 15g, Saturated Fat 2g, Sodium 110mg, Total Carbohydrate 6g, Dietary Fiber 2g, Sugars 1g, Protein 6g",
+    "price": "$7.99"
+  }
+]

@@ -20,6 +20,7 @@ class CameraController(
         private const val PREFERRED_WIDTH = 1280
         private const val PREFERRED_HEIGHT = 720
         private const val JPEG_QUALITY = 70
+        private const val EXPOSURE_COMPENSATION = 8
     }
 
     private var cameraDevice: CameraDevice? = null
@@ -145,19 +146,22 @@ class CameraController(
     }
 
     private fun findCameraId(): String? {
+        // On AR glasses (e.g. RayNeo), "back" may be world-facing, "front" may be user-facing.
+        // Some devices report world camera as FRONT. Prefer BACK first (standard world cam), then FRONT.
+        var backId: String? = null
+        var frontId: String? = null
         for (id in cameraManager.cameraIdList) {
             val characteristics = cameraManager.getCameraCharacteristics(id)
             val facing = characteristics.get(CameraCharacteristics.LENS_FACING)
-
             Log.i(TAG, "Camera $id: facing=$facing")
-
-            // Prefer back camera
-            if (facing == CameraCharacteristics.LENS_FACING_BACK) {
-                return id
+            when (facing) {
+                CameraCharacteristics.LENS_FACING_BACK -> backId = id
+                CameraCharacteristics.LENS_FACING_FRONT -> frontId = id
+                else -> Unit
             }
         }
-        // Fallback to first camera
-        return cameraManager.cameraIdList.firstOrNull()
+        // On RayNeo etc., BACK can be phone-mirror and FRONT the world camera. Prefer FRONT for world view.
+        return frontId ?: backId ?: cameraManager.cameraIdList.firstOrNull()
     }
 
     private fun createCaptureSession(camera: CameraDevice) {
@@ -188,13 +192,7 @@ class CameraController(
 
     private fun startCapture(session: CameraCaptureSession) {
         try {
-            val template = if (useJpegFormat) {
-                CameraDevice.TEMPLATE_STILL_CAPTURE
-            } else {
-                CameraDevice.TEMPLATE_PREVIEW
-            }
-
-            val requestBuilder = cameraDevice?.createCaptureRequest(template)?.apply {
+            val requestBuilder = cameraDevice?.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)?.apply {
                 addTarget(imageReader!!.surface)
 
                 // Auto focus
@@ -206,7 +204,7 @@ class CameraController(
                 // Exposure compensation (increase brightness)
                 // Range is typically -12 to +12, each step is usually 1/3 or 1/2 EV
                 // Positive = brighter, Negative = darker
-                set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, 4) // +4 steps brighter
+                set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, EXPOSURE_COMPENSATION)
 
                 if (useJpegFormat) {
                     set(CaptureRequest.JPEG_QUALITY, JPEG_QUALITY.toByte())
@@ -230,15 +228,21 @@ class CameraController(
     fun stop() {
         Log.i(TAG, "Stopping camera")
         try {
-            captureSession?.close()
-            cameraDevice?.close()
-            imageReader?.close()
+            val session = captureSession
+            captureSession = null
+            session?.close()
+
+            val camera = cameraDevice
+            cameraDevice = null
+            camera?.close()
+
+            val reader = imageReader
+            imageReader = null
+            reader?.close()
+
             handlerThread.quitSafely()
         } catch (e: Exception) {
             Log.e(TAG, "Error stopping camera", e)
         }
-        captureSession = null
-        cameraDevice = null
-        imageReader = null
     }
 }

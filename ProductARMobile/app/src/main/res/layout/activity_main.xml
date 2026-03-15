@@ -4,19 +4,19 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <!-- Preview -->
+    <!-- Camera preview -->
     <ImageView
         android:id="@+id/ivPreview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter" />
 
-    <!-- Status overlay -->
+    <!-- Top status bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="12dp"
         android:background="#80000000">
 
         <TextView
@@ -25,42 +25,115 @@
             android:layout_height="wrap_content"
             android:text="Status: Initializing..."
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="4dp">
+            android:layout_marginTop="2dp">
 
             <TextView
                 android:id="@+id/tvFps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stream: -- FPS"
+                android:text="Stream: --"
                 android:textColor="#AAAAAA"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  |  "
+                android:text=" | "
                 android:textColor="#666666"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvDetections"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Detect: -- FPS"
+                android:text="Detect: --"
                 android:textColor="#AAAAAA"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" | "
+                android:textColor="#666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvModels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Models: loading..."
+                android:textColor="#AAAAAA"
+                android:textSize="12sp" />
         </LinearLayout>
-
     </LinearLayout>
 
-    <!-- Connection panel -->
+    <!-- Bottom control panel -->
+    <LinearLayout
+        android:id="@+id/controlPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="#CC000000">
+
+        <!-- AI response text -->
+        <TextView
+            android:id="@+id/tvAiResponse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#00FF00"
+            android:textSize="14sp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:visibility="gone" />
+
+        <!-- Action buttons row -->
+        <LinearLayout
+            android:id="@+id/actionButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btnAsk"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="🎤 Ask"
+                android:textSize="13sp"
+                android:layout_marginEnd="4dp" />
+
+            <Button
+                android:id="@+id/btnOcr"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="📷 OCR"
+                android:textSize="13sp"
+                android:layout_marginEnd="4dp" />
+
+            <Button
+                android:id="@+id/btnShelf"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="📋 Shelf"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Connection panel (center, shown initially) -->
     <LinearLayout
         android:id="@+id/connectPanel"
         android:layout_width="wrap_content"
@@ -73,10 +146,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Retail AR Assistant"
+            android:textColor="#00FF00"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Enter Glasses IP"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:layout_gravity="center" />
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp" />
 
         <EditText
             android:id="@+id/etIpAddress"
@@ -86,7 +169,7 @@
             android:textColor="#FFFFFF"
             android:textColorHint="#888888"
             android:inputType="text"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:padding="12dp"
             android:background="#333333" />
 
@@ -95,7 +178,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Connect"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="12dp" />
 
     </LinearLayout>
 

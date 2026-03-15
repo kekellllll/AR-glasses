@@ -32,24 +32,16 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Model files (download via scripts/download_models.sh)
 *.tflite
-*.tflite.metadata
-*.tflite.labels
-*.tflite.txt
-*.tflite.bin
-*.tflite.proto
-*.tflite.summary
-*.tflite.trace
-*.tflite.trace.json
-*.tflite.trace.txt
-*.tflite.trace.bin
-*.tflite.trace.proto
-*.tflite.trace.summary
-*.tflite.trace.trace
-*.tflite.trace.trace.json
-*.tflite.trace.trace.txt
-*.tflite.trace.trace.bin
-*.tflite.trace.trace.proto
-*.tflite.trace.trace.summary
-*.tflite.trace.trace.trace
-*.tflite.trace.trace.trace.json 
+*.gguf
+*.bin
+!/scripts/*.sh
+
+# Native lib source (cloned at build time)
+**/src/main/cpp/llama.cpp/
+**/src/main/cpp/whisper.cpp/
+
+# LLM models directory
+**/models/*.gguf

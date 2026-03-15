@@ -13,6 +13,10 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        ndk {
+            abiFilters += listOf("arm64-v8a")
+        }
     }
 
     buildTypes {
@@ -34,13 +38,20 @@ android {
         jvmTarget = "17"
     }
 
-    // Don't compress tflite files
     androidResources {
-        noCompress += "tflite"
+        noCompress += listOf("tflite", "bin", "gguf")
     }
+
     packaging {
         jniLibs {
             useLegacyPackaging = true
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+            version = "3.22.1"
         }
     }
 }
@@ -50,13 +61,18 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     // TensorFlow Lite
     implementation("org.tensorflow:tensorflow-lite:2.14.0")
     implementation("org.tensorflow:tensorflow-lite-gpu:2.14.0")
-    implementation("org.tensorflow:tensorflow-lite-gpu-api:2.14.0")  // ADD THIS
-    // QNN Delegate
-//    implementation(files("libs/qtld-release.aar"))
-//    implementation("com.google.android.gms:play-services-tflite-java:16.4.0")
-//    implementation("com.google.android.gms:play-services-tflite-gpu:16.4.0")
+    implementation("org.tensorflow:tensorflow-lite-gpu-api:2.14.0")
+
+    // ML Kit OCR
+    implementation("com.google.mlkit:text-recognition:16.0.0")
+
+    // Gson for JSON parsing
+    implementation("com.google.code.gson:gson:2.10.1")
 }

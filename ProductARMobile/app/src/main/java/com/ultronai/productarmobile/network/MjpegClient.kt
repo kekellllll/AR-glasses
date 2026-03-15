@@ -14,7 +14,8 @@ import kotlin.concurrent.thread
 class MjpegClient(
     private val onFrameReceived: (Bitmap) -> Unit,
     private val onConnectionChanged: (Boolean) -> Unit,
-    private val onFpsUpdate: (Int) -> Unit
+    private val onFpsUpdate: (Int) -> Unit,
+    private val onError: ((String) -> Unit)? = null
 ) {
     companion object {
         private const val TAG = "MjpegClient"
@@ -28,13 +29,17 @@ class MjpegClient(
     @Volatile
     private var isRunning = false
 
+    private var connectThread: Thread? = null
     private var frameCount = 0
     private var lastFpsTime = System.currentTimeMillis()
 
     fun connect(ip: String, port: Int = 8080) {
         if (isRunning) return
+        connectThread?.let {
+            if (it.isAlive) return
+        }
 
-        thread {
+        connectThread = thread {
             try {
                 Log.i(TAG, "Connecting to $ip:$port...")
 
@@ -62,7 +67,11 @@ class MjpegClient(
 
             } catch (e: Exception) {
                 Log.e(TAG, "Connection failed: ${e.message}")
-                mainHandler.post { onConnectionChanged(false) }
+                val msg = e.message ?: "Unknown error"
+                mainHandler.post {
+                    onConnectionChanged(false)
+                    onError?.invoke(msg)
+                }
             }
         }
     }
@@ -79,8 +88,8 @@ class MjpegClient(
                 val line = readLine(input)
 
                 if (line == null) {
-                    Thread.sleep(10)
-                    continue
+                    Log.w(TAG, "Stream EOF reached")
+                    break
                 }
 
                 when {

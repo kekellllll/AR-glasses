@@ -2,6 +2,7 @@ package com.ultronai.productarglasses.network
 
 import android.util.Log
 import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.withLock
 import java.io.*
 import java.net.ServerSocket
 import java.net.Socket
@@ -23,8 +24,8 @@ class StreamServer(
     private var inputStream: BufferedReader? = null
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private var isRunning = false
-    private val sendLock = Object()
+    @Volatile private var isRunning = false
+    private val sendLock = kotlinx.coroutines.sync.Mutex()
 
     fun start() {
         if (isRunning) return
@@ -100,14 +101,11 @@ class StreamServer(
 
     fun sendFrame(jpegData: ByteArray) {
         scope.launch {
-            synchronized(sendLock) {
+            sendLock.withLock {
                 try {
                     outputStream?.let { stream ->
-                        // Write magic marker
                         stream.writeInt(FRAME_MAGIC)
-                        // Write frame length
                         stream.writeInt(jpegData.size)
-                        // Write JPEG data
                         stream.write(jpegData)
                         stream.flush()
                     }

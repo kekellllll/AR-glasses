@@ -66,6 +66,7 @@ class RTMDetDetector(
         val zeroPoint: Int
     )
     private val outputInfos = mutableListOf<OutputInfo>()
+    private val outputBuffersCache = mutableMapOf<Int, ByteBuffer>()
 
     private var actualBackend: Backend = Backend.CPU
 
@@ -212,21 +213,31 @@ class RTMDetDetector(
 
     private fun copyAssetToFile(context: Context, assetName: String): File {
         val outFile = File(context.cacheDir, assetName)
-        if (!outFile.exists()) {
+        val versionFile = File(context.cacheDir, "$assetName.version")
+        val currentVersion = try {
+            context.packageManager.getPackageInfo(context.packageName, 0).longVersionCode.toString()
+        } catch (_: Exception) { "0" }
+
+        val needsCopy = !outFile.exists() ||
+                !versionFile.exists() ||
+                versionFile.readText().trim() != currentVersion
+
+        if (needsCopy) {
             context.assets.open(assetName).use { input ->
                 FileOutputStream(outFile).use { output ->
                     input.copyTo(output)
                 }
             }
-            Log.i(TAG, "Copied $assetName to ${outFile.absolutePath}")
+            versionFile.writeText(currentVersion)
+            Log.i(TAG, "Copied $assetName to ${outFile.absolutePath} (version=$currentVersion)")
         }
         return outFile
     }
 
     private fun loadModelFile(file: File): MappedByteBuffer {
-        val inputStream = FileInputStream(file)
-        val fileChannel = inputStream.channel
-        return fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, file.length())
+        return FileInputStream(file).use { inputStream ->
+            inputStream.channel.map(FileChannel.MapMode.READ_ONLY, 0, file.length())
+        }
     }
 
     private fun initAnchors() {
@@ -446,9 +457,11 @@ class RTMDetDetector(
         for (info in outputInfos) {
             val size = info.shape.reduce { acc, v -> acc * v }
             val byteSize = if (info.isQuantized) size else size * 4
-            outputBuffers[info.index] = ByteBuffer.allocateDirect(byteSize).apply {
-                order(ByteOrder.nativeOrder())
+            val buf = outputBuffersCache.getOrPut(info.index) {
+                ByteBuffer.allocateDirect(byteSize).order(ByteOrder.nativeOrder())
             }
+            buf.clear()
+            outputBuffers[info.index] = buf
         }
 
         interp.runForMultipleInputsOutputs(arrayOf(inputBuffer), outputBuffers)
@@ -461,7 +474,7 @@ class RTMDetDetector(
 
             outputs[info.index] = if (info.isQuantized) {
                 FloatArray(size) {
-                    val raw = buffer.get().toInt()
+                    val raw = buffer.get().toInt() and 0xFF
                     (raw - info.zeroPoint) * info.scale
                 }
             } else {

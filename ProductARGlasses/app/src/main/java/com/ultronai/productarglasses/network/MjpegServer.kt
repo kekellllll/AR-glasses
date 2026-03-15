@@ -78,9 +78,14 @@ class MjpegServer(
                 Log.i(TAG, "Client connected. Total: ${clients.size}")
                 onClientConnected(clients.size)
 
-                // Keep connection alive until closed
-                while (isRunning && socket.isConnected && !socket.isClosed) {
-                    Thread.sleep(1000)
+                socket.soTimeout = 5000
+                val detector = socket.getInputStream()
+                while (isRunning && !socket.isClosed) {
+                    try {
+                        if (detector.read() == -1) break
+                    } catch (_: java.net.SocketTimeoutException) {
+                        // no data is fine, just keep checking
+                    }
                 }
 
             } catch (e: Exception) {
